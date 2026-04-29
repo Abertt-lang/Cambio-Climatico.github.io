@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoConciencia — Despierta tu planeta</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #2ecc71;
+    --verde-oscuro: #1a7a43;
+    --tierra: #c0392b;
+    --naranja: #e67e22;
+    --cielo: #3498db;
+    --negro: #0d0d0d;
+    --crema: #f5f0e8;
+    --amarillo: #f1c40f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--negro);
+    color: var(--crema);
+    overflow-x: hidden;
+  }
+
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 80%, #1a4a2e 0%, #0d0d0d 70%);
+    padding: 2rem;
+  }
+
+  .earth-container {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin-bottom: 2rem;
+    animation: flotar 4s ease-in-out infinite;
+  }
+
+  .earth {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3ec8f7, #1565c0 50%, #0d3b6b);
+    position: relative;
+    box-shadow: 0 0 60px rgba(46,204,113,0.4), inset -20px -10px 40px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+
+  .earth::before {
+    content: '';
+    position: absolute;
+    top: 20%; left: 15%;
+    width: 40%; height: 35%;
+    background: var(--verde);
+    border-radius: 60% 40% 55% 45%;
+    box-shadow: 60px 30px 0 10px var(--verde-oscuro), 80px 80px 0 5px #27ae60;
+  }
+
+  .earth::after {
+    content: '';
+    position: absolute;
+    top: 55%; left: 55%;
+    width: 30%; height: 25%;
+    background: #27ae60;
+    border-radius: 40% 60% 40% 60%;
+  }
+
+  .smoke {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: rgba(180,180,180,0.7);
+    border-radius: 50%;
+    animation: subirHumo 3s ease-out infinite;
+  }
+
+  .smoke:nth-child(1) { top: 10%; left: 60%; animation-delay: 0s; }
+  .smoke:nth-child(2) { top: 5%; left: 70%; animation-delay: 0.8s; width: 12px; height: 12px; }
+  .smoke:nth-child(3) { top: 0%; left: 65%; animation-delay: 1.5s; width: 22px; height: 22px; }
+
+  @keyframes subirHumo {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-120px) scale(3); opacity: 0; }
+  }
+
+  @keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 4px;
+    color: var(--crema);
+  }
+
+  .hero-title span { color: var(--verde); text-shadow: 0 0 30px rgba(46,204,113,0.6); }
+
+  .hero-sub {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: rgba(245,240,232,0.7);
+    max-width: 550px;
+    margin: 1rem auto 2rem;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .btn-hero {
+    background: var(--verde);
+    color: var(--negro);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    box-shadow: 0 0 30px rgba(46,204,113,0.4);
+  }
+
+  .btn-hero:hover {
+    background: var(--crema);
+    transform: scale(1.06);
+    box-shadow: 0 0 50px rgba(46,204,113,0.7);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.4);
+    animation: parpadear 2s ease-in-out infinite;
+    letter-spacing: 2px;
+  }
+
+  @keyframes parpadear { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  section {
+    padding: 5rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 5px;
+    color: var(--verde);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  #termometro-section {
+    background: linear-gradient(135deg, #0d1117 0%, #1a2a1a 100%);
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    margin: 2rem auto;
+    max-width: 1100px;
+  }
+
+  .thermo-wrapper {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .thermo-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .thermometer {
+    width: 60px;
+    height: 300px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 30px;
+    position: relative;
+    border: 3px solid rgba(255,255,255,0.2);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .thermo-fill {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, #c0392b, #e67e22, #f1c40f);
+    border-radius: 0 0 30px 30px;
+    transition: height 1.2s ease;
+    height: 20%;
+  }
+
+  .thermo-label-top {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--tierra);
+  }
+
+  .thermo-info { max-width: 500px; text-align: left; }
+
+  .thermo-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--naranja);
+  }
+
+  .thermo-info p {
+    color: rgba(245,240,232,0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .temp-buttons { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+
+  .temp-btn {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: var(--crema);
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .temp-btn:hover, .temp-btn.active {
+    background: var(--naranja);
+    border-color: var(--naranja);
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  .causas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .causa-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+
+  .causa-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    border-color: var(--verde);
+  }
+
+  .causa-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+  .causa-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    color: var(--naranja);
+    margin-bottom: 0.7rem;
+  }
+
+  .causa-card p { color: rgba(245,240,232,0.7); font-size: 0.95rem; line-height: 1.65; }
+
+  .causa-badge {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--tierra);
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+  }
+
+  .timeline { position: relative; margin-top: 3rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--verde), var(--naranja), var(--tierra));
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.7s ease;
+  }
+
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+  .timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+    transform: translateX(30px);
+  }
+
+  .timeline-item:nth-child(even).visible { transform: translateX(0); }
+
+  .timeline-dot {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  .timeline-content {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 420px;
+  }
+
+  .timeline-content h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-content p { color: rgba(245,240,232,0.7); font-size: 0.93rem; line-height: 1.6; }
+
+  #quiz-section {
+    background: linear-gradient(135deg, #0a1628 0%, #1a0a28 100%);
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    margin: 2rem auto;
+    max-width: 1100px;
+    text-align: center;
+  }
+
+  .quiz-box { max-width: 650px; margin: 2rem auto 0; }
+
+  .quiz-question {
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-opt {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.12);
+    color: var(--crema);
+    padding: 1rem;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    line-height: 1.4;
+  }
+
+  .quiz-opt:hover:not(:disabled) {
+    background: rgba(46,204,113,0.15);
+    border-color: var(--verde);
+    transform: scale(1.03);
+  }
+
+  .quiz-opt.correcto { background: rgba(46,204,113,0.25); border-color: var(--verde); color: var(--verde); }
+  .quiz-opt.incorrecto { background: rgba(192,57,43,0.25); border-color: var(--tierra); color: #e74c3c; }
+
+  .quiz-feedback {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: none;
+    line-height: 1.5;
+  }
+
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(46,204,113,0.15); color: var(--verde); }
+  .quiz-feedback.fail { background: rgba(192,57,43,0.15); color: #e74c3c; }
+
+  .quiz-progress { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+  .q-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.3s;
+  }
+
+  .q-dot.done { background: var(--verde); }
+  .q-dot.current { background: var(--amarillo); }
+
+  .quiz-score { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--verde); display: none; }
+
+  .btn-next {
+    background: var(--verde);
+    color: var(--negro);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    padding: 0.8rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: none;
+  }
+
+  .btn-next:hover { background: var(--crema); transform: scale(1.05); }
+
+  .acciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .accion-card {
+    background: rgba(46,204,113,0.07);
+    border: 1px solid rgba(46,204,113,0.2);
+    border-radius: 20px;
+    padding: 2rem 1.2rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .accion-card:hover {
+    background: rgba(46,204,113,0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(46,204,113,0.15);
+  }
+
+  .accion-card .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+
+  .accion-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--verde);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+
+  .accion-card p { color: rgba(245,240,232,0.65); font-size: 0.88rem; line-height: 1.55; }
+
+  .contador-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 3rem 0;
+  }
+
+  .contador-box {
+    background: rgba(192,57,43,0.1);
+    border: 1px solid rgba(192,57,43,0.3);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 180px;
+  }
+
+  .contador-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--tierra); line-height: 1; }
+  .contador-label { font-size: 0.85rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; line-height: 1.4; }
+
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    color: rgba(245,240,232,0.4);
+    font-size: 0.9rem;
+  }
+
+  footer strong { color: var(--verde); }
+
+  .separator {
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(46,204,113,0.4), transparent);
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .timeline::before { left: 24px; }
+    .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; transform: translateX(0); }
+    .timeline-item.visible, .timeline-item:nth-child(even).visible { transform: translateX(0); }
+    .quiz-options { grid-template-columns: 1fr; }
+    .thermo-wrapper { flex-direction: column; }
+    .thermo-info { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="earth-container">
+    <div class="earth">
+      <div class="smoke"></div>
+      <div class="smoke"></div>
+      <div class="smoke"></div>
+    </div>
+  </div>
+  <p class="section-label">EDUCACIÓN AMBIENTAL</p>
+  <h1 class="hero-title">Tu planeta<br><span>te necesita</span></h1>
+  <p class="hero-sub">Cada acción cotidiana tiene un impacto en nuestro mundo. Aprende qué es el cambio climático, por qué ocurre y cómo puedes hacer la diferencia.</p>
+  <a href="#termometro-section" class="btn-hero">Comenzar a aprender</a>
+  <span class="scroll-hint">↓ DESPLÁZATE PARA EXPLORAR ↓</span>
+</div>
+
+<!-- CONTADORES -->
+<section>
+  <div class="fade-in">
+    <p class="section-label">EL PROBLEMA EN NÚMEROS</p>
+    <h2 class="section-title">¿Qué pasa <span style="color:var(--tierra)">ahora mismo</span>?</h2>
+    <p style="color:rgba(245,240,232,0.65); max-width:600px; font-size:1rem; line-height:1.7; margin-bottom:0.5rem;">Mientras lees esto, el planeta sufre consecuencias reales. Estos datos muestran el impacto acumulado de nuestros hábitos diarios.</p>
+  </div>
+  <div class="contador-row fade-in">
+    <div class="contador-box">
+      <div class="contador-num" id="cnt1">0</div>
+      <div class="contador-label">Toneladas de CO₂<br>emitidas hoy</div>
+    </div>
+    <div class="contador-box">
+      <div class="contador-num" id="cnt2">0</div>
+      <div class="contador-label">Hectáreas de bosque<br>perdidas este año</div>
+    </div>
+    <div class="contador-box">
+      <div class="contador-num" id="cnt3">0</div>
+      <div class="contador-label">Toneladas de plástico<br>en los océanos hoy</div>
+    </div>
+  </div>
+</section>
+
+<div class="separator"></div>
+
+<!-- TERMÓMETRO -->
+<div id="termometro-section">
+  <section style="padding:0; max-width:900px;">
+    <p class="section-label">TEMPERATURA GLOBAL</p>
+    <h2 class="section-title">El termómetro <span style="color:var(--naranja)">del planeta</span></h2>
+    <div class="thermo-wrapper">
+      <div class="thermo-visual">
+        <span class="thermo-label-top" id="thermo-temp">+1.1°C</span>
+        <div class="thermometer">
+          <div class="thermo-fill" id="thermo-fill"></div>
+        </div>
+        <span style="font-size:0.8rem; color:rgba(245,240,232,0.4)">Nivel normal</span>
+      </div>
+      <div class="thermo-info">
+        <h3 id="thermo-titulo">Actualidad: +1.1°C</h3>
+        <p id="thermo-desc">El planeta ya ha subido 1.1°C desde la era preindustrial. Parece poco, pero este incremento ya provoca olas de calor más intensas, sequías más largas y tormentas más devastadoras.</p>
+        <div class="temp-buttons">
+          <button class="temp-btn active" onclick="setTemp(0)">Hoy: +1.1°C</button>
+          <button class="temp-btn" onclick="setTemp(1)">+1.5°C (Meta)</button>
+          <button class="temp-btn" onclick="setTemp(2)">+2°C (Peligro)</button>
+          <button class="temp-btn" onclick="setTemp(3)">+3°C (Catástrofe)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CAUSAS -->
+<section class="fade-in">
+  <p class="section-label">¿POR QUÉ OCURRE?</p>
+  <h2 class="section-title">Las principales <span style="color:var(--naranja)">causas</span></h2>
+  <div class="causas-grid">
+    <div class="causa-card">
+      <span class="causa-badge">Causa #1</span>
+      <span class="causa-icon">🏭</span>
+      <h3>Quema de combustibles</h3>
+      <p>El carbón, petróleo y gas que usamos para energía, transporte y fábricas libera CO₂ a la atmósfera, que actúa como una manta atrapando calor.</p>
+    </div>
+    <div class="causa-card">
+      <span class="causa-badge">Causa #2</span>
+      <span class="causa-icon">🌳</span>
+      <h3>Deforestación</h3>
+      <p>Los árboles absorben CO₂. Al talarlos perdemos los "pulmones del planeta" y liberamos el carbono almacenado en la madera.</p>
+    </div>
+    <div class="causa-card">
+      <span class="causa-badge">Causa #3</span>
+      <span class="causa-icon">🐄</span>
+      <h3>Ganadería industrial</h3>
+      <p>La crianza masiva de ganado produce metano, un gas 80 veces más potente que el CO₂ para calentar la atmósfera a corto plazo.</p>
+    </div>
+    <div class="causa-card">
+      <span class="causa-badge">Causa #4</span>
+      <span class="causa-icon">🗑️</span>
+      <h3>Residuos mal gestionados</h3>
+      <p>Los residuos orgánicos en rellenos sanitarios generan metano. Los plásticos tardan cientos de años en descomponerse y contaminan tierra y agua.</p>
+    </div>
+  </div>
+</section>
+
+<div class="separator"></div>
+
+<!-- CONSECUENCIAS -->
+<section class="fade-in">
+  <p class="section-label">¿QUÉ NOS ESPERA?</p>
+  <h2 class="section-title">Consecuencias <span style="color:var(--tierra)">reales</span></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:rgba(52,152,219,0.8)">🌊</div>
+      <div class="timeline-content">
+        <h4 style="color:var(--cielo)">Subida del nivel del mar</h4>
+        <p>El deshielo de glaciares y polos eleva el mar. Para 2100 podría subir entre 0.3 y 1 metro, inundando ciudades costeras donde viven millones de personas.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:rgba(231,76,60,0.8)">🔥</div>
+      <div class="timeline-content">
+        <h4 style="color:#e74c3c">Olas de calor extremas</h4>
+        <p>Las temperaturas extremas se vuelven más frecuentes e intensas. Esto provoca muertes, colapso de sistemas de salud y destrucción de cultivos.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:rgba(243,156,18,0.8)">🌪️</div>
+      <div class="timeline-content">
+        <h4 style="color:#f39c12">Tormentas más destructivas</h4>
+        <p>Un océano más caliente alimenta huracanes y ciclones más poderosos. Las lluvias torrenciales e inundaciones devastan comunidades enteras.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:rgba(46,204,113,0.8)">🦋</div>
+      <div class="timeline-content">
+        <h4 style="color:var(--verde)">Extinción de especies</h4>
+        <p>El cambio en los ecosistemas empuja a muchas especies a la extinción. Se estima que 1 de cada 6 especies podría desaparecer si la temperatura sube 2°C.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:rgba(155,89,182,0.8)">💧</div>
+      <div class="timeline-content">
+        <h4 style="color:#9b59b6">Crisis del agua dulce</h4>
+        <p>Los glaciares que alimentan ríos y acuíferos están desapareciendo. Millones de personas enfrentarán escasez de agua potable en las próximas décadas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<div id="quiz-section">
+  <section style="padding:0; max-width:900px;">
+    <p class="section-label">PON A PRUEBA LO QUE APRENDISTE</p>
+    <h2 class="section-title">¿Cuánto <span style="color:var(--amarillo)">sabes</span>?</h2>
+    <div class="quiz-box">
+      <div class="quiz-progress" id="quiz-progress"></div>
+      <p class="quiz-question" id="quiz-q"></p>
+      <div class="quiz-options" id="quiz-opts"></div>
+      <div class="quiz-feedback" id="quiz-fb"></div>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">SIGUIENTE →</button>
+      <div class="quiz-score" id="quiz-final"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ACCIONES -->
+<section class="fade-in">
+  <p class="section-label">TÚ PUEDES CAMBIAR ESTO</p>
+  <h2 class="section-title">Acciones que <span style="color:var(--verde)">sí importan</span></h2>
+  <p style="color:rgba(245,240,232,0.65); max-width:600px; font-size:1rem; line-height:1.7; margin-bottom:0.5rem;">No necesitas ser un experto para actuar. Pequeños cambios cotidianos, multiplicados por millones de personas, tienen un impacto real.</p>
+  <div class="acciones-grid">
+    <div class="accion-card">
+      <div class="icon">🚶</div>
+      <h4>Muévete diferente</h4>
+      <p>Usa bici, camina o el transporte público. Evitar un viaje en auto 2 veces por semana reduce 600kg de CO₂ al año.</p>
+    </div>
+    <div class="accion-card">
+      <div class="icon">🥗</div>
+      <h4>Come más plantas</h4>
+      <p>Reducir el consumo de carne roja 3 días por semana puede disminuir tu huella de carbono alimentaria en un 40%.</p>
+    </div>
+    <div class="accion-card">
+      <div class="icon">💡</div>
+      <h4>Consume menos energía</h4>
+      <p>Desenchufa dispositivos en desuso, usa LED y aprovecha la luz natural. Los hogares representan el 20% de las emisiones.</p>
+    </div>
+    <div class="accion-card">
+      <div class="icon">♻️</div>
+      <h4>Separa tus residuos</h4>
+      <p>Reciclar correctamente reduce la necesidad de extraer nuevas materias primas y disminuye los gases de rellenos sanitarios.</p>
+    </div>
+    <div class="accion-card">
+      <div class="icon">🌱</div>
+      <h4>Planta y protege</h4>
+      <p>Un árbol adulto absorbe hasta 22kg de CO₂ al año. Apoya espacios verdes locales y evita comprar madera sin certificación.</p>
+    </div>
+    <div class="accion-card">
+      <div class="icon">📢</div>
+      <h4>Habla de ello</h4>
+      <p>Compartir información con tu familia y amigos multiplica el impacto. La conciencia colectiva impulsa cambios políticos reales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="font-size:2rem; margin-bottom:0.5rem">🌍</p>
+  <p>Hecho con propósito por <strong>EcoConciencia</strong> — Educación ambiental para todos.</p>
+  <p style="margin-top:0.5rem">Porque conocer el problema es el primer paso para resolverlo.</p>
+</footer>
+
+<script>
+const thermoData = [
+  { temp: "+1.1°C", titulo: "Actualidad: +1.1°C", pct: 28, desc: "El planeta ya ha subido 1.1°C desde la era preindustrial. Parece poco, pero este incremento ya provoca olas de calor más intensas, sequías más largas y tormentas más devastadoras. El ritmo actual nos lleva hacia +3°C para el año 2100." },
+  { temp: "+1.5°C", titulo: "Meta del Acuerdo de París: +1.5°C", pct: 45, desc: "Este es el límite que los científicos consideran relativamente seguro. Superarlo aumenta drásticamente el riesgo de puntos de inflexión irreversibles: deshielo del permafrost, desaparición de arrecifes de coral y eventos climáticos extremos mucho más frecuentes." },
+  { temp: "+2°C", titulo: "Zona de peligro: +2°C", pct: 62, desc: "A 2°C, el 99% de los arrecifes de coral desaparecería. Los rendimientos agrícolas caerían hasta un 25%, los eventos de calor extremo serían 5 veces más frecuentes y 420 millones de personas enfrentarían sequías severas." },
+  { temp: "+3°C", titulo: "Escenario catastrófico: +3°C", pct: 88, desc: "Con 3°C nos encaminamos a una Tierra irreconocible. Ciudades costeras como Lima, Buenos Aires y Barcelona estarían parcialmente inundadas. Migraciones masivas, conflictos por recursos, hambrunas y la extinción de un tercio de todas las especies del planeta." }
+];
+
+function setTemp(i) {
+  const d = thermoData[i];
+  document.getElementById('thermo-temp').textContent = d.temp;
+  document.getElementById('thermo-fill').style.height = d.pct + '%';
+  document.getElementById('thermo-titulo').textContent = d.titulo;
+  document.getElementById('thermo-desc').textContent = d.desc;
+  document.querySelectorAll('.temp-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+}
+
+setTemp(0);
+
+function animCounter(id, target, duration) {
+  let start = 0;
+  const step = target / (duration / 30);
+  const el = document.getElementById(id);
+  const interval = setInterval(() => {
+    start += step;
+    if (start >= target) { el.textContent = target.toLocaleString(); clearInterval(interval); }
+    else { el.textContent = Math.floor(start).toLocaleString(); }
+  }, 30);
+}
+
+let counterStarted = false;
+const counterObserver = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting && !counterStarted) {
+    counterStarted = true;
+    animCounter('cnt1', 109000, 1800);
+    animCounter('cnt2', 4800, 1800);
+    animCounter('cnt3', 980, 1800);
+  }
+});
+counterObserver.observe(document.getElementById('cnt1'));
+
+const preguntas = [
+  {
+    q: "¿Cuánto ha subido la temperatura promedio del planeta desde la era industrial?",
+    opts: ["0.2°C", "1.1°C", "5°C", "0.5°C"],
+    correct: 1,
+    ok: "✅ Correcto. Ya hemos subido 1.1°C y los efectos son visibles: más olas de calor, glaciares retrocediendo y eventos extremos más frecuentes.",
+    fail: "❌ La respuesta es 1.1°C. Aunque parece poco, este cambio ya está provocando fenómenos climáticos mucho más intensos en todo el mundo."
+  },
+  {
+    q: "¿Qué es el 'efecto invernadero'?",
+    opts: ["Una técnica de cultivo en invernaderos", "El calentamiento natural de la Tierra por gases atmosféricos", "Un fenómeno solo causado por fábricas", "La evaporación del agua de los océanos"],
+    correct: 1,
+    ok: "✅ Exacto. El efecto invernadero es natural y necesario para la vida, pero la actividad humana ha aumentado los gases que lo intensifican.",
+    fail: "❌ El efecto invernadero es el proceso natural por el cual ciertos gases (CO₂, metano, vapor de agua) atrapan el calor del sol en la atmósfera terrestre."
+  },
+  {
+    q: "¿Cuál de estas actividades NO contribuye al cambio climático?",
+    opts: ["Andar en bicicleta al trabajo", "Dejar dispositivos enchufados en espera", "Comprar ropa nueva cada semana", "Comer carne de res a diario"],
+    correct: 0,
+    ok: "✅ ¡Bien! Usar bicicleta no genera emisiones y además mejora tu salud. Es una de las acciones más efectivas a nivel individual.",
+    fail: "❌ Andar en bicicleta es la opción correcta: no genera emisiones de CO₂. Las otras tres sí contribuyen al cambio climático."
+  },
+  {
+    q: "Si la temperatura global sube 2°C, ¿qué porcentaje de arrecifes de coral desaparecería?",
+    opts: ["20%", "50%", "75%", "99%"],
+    correct: 3,
+    ok: "✅ Correcto. El 99% de los arrecifes de coral no sobreviviría a 2°C de calentamiento. Son el hogar del 25% de todas las especies marinas.",
+    fail: "❌ La respuesta es el 99%. Su pérdida afectaría al 25% de toda la vida marina y a más de 500 millones de personas."
+  },
+  {
+    q: "¿Qué acción individual tiene mayor impacto para reducir tu huella de carbono?",
+    opts: ["Reciclar papel y plástico", "Apagar la luz al salir", "Reducir el consumo de carne y vuelos en avión", "Usar bolsas reutilizables en el supermercado"],
+    correct: 2,
+    ok: "✅ Exacto. Reducir el consumo de carne y los vuelos son las acciones individuales con mayor impacto.",
+    fail: "❌ Aunque todas ayudan, reducir carne y vuelos es lo más impactante comparado con otras acciones cotidianas."
+  }
+];
+
+let qIndex = 0, score = 0, answered = false;
+
+function renderQuiz() {
+  const p = preguntas[qIndex];
+  document.getElementById('quiz-progress').innerHTML = preguntas.map((_, i) =>
+    `<div class="q-dot ${i < qIndex ? 'done' : i === qIndex ? 'current' : ''}"></div>`
+  ).join('');
+  document.getElementById('quiz-q').textContent = `${qIndex + 1}. ${p.q}`;
+  document.getElementById('quiz-opts').innerHTML = p.opts.map((o, i) =>
+    `<button class="quiz-opt" onclick="selectOpt(${i})">${o}</button>`
+  ).join('');
+  document.getElementById('quiz-fb').className = 'quiz-feedback';
+  document.getElementById('quiz-fb').textContent = '';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('quiz-final').style.display = 'none';
+  answered = false;
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const p = preguntas[qIndex];
+  document.querySelectorAll('.quiz-opt').forEach((b, j) => {
+    b.disabled = true;
+    if (j === p.correct) b.classList.add('correcto');
+    else if (j === i) b.classList.add('incorrecto');
+  });
+  const fb = document.getElementById('quiz-fb');
+  if (i === p.correct) { score++; fb.textContent = p.ok; fb.className = 'quiz-feedback show ok'; }
+  else { fb.textContent = p.fail; fb.className = 'quiz-feedback show fail'; }
+  document.getElementById('btn-next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  qIndex++;
+  if (qIndex < preguntas.length) { renderQuiz(); }
+  else { showResult(); }
+}
+
+function showResult() {
+  document.getElementById('quiz-q').textContent = '';
+  document.getElementById('quiz-opts').innerHTML = '';
+  document.getElementById('quiz-fb').className = 'quiz-feedback';
+  document.getElementById('btn-next').style.display = 'none';
+  const msgs = ["¡Sigue aprendiendo! Cada bit de conocimiento cuenta. 🌱", "¡Buen comienzo! Ya conoces los fundamentos del cambio climático. 🌍", "¡Muy bien! Tienes una buena base de conocimiento ambiental. 🌿", "¡Excelente! Eres un verdadero embajador del medio ambiente. 🏆"];
+  const msg = score <= 1 ? msgs[0] : score <= 2 ? msgs[1] : score <= 4 ? msgs[2] : msgs[3];
+  const final = document.getElementById('quiz-final');
+  final.innerHTML = `${score}/${preguntas.length} correctas<br><span style="font-size:1.2rem; color:var(--crema); font-family:'Nunito',sans-serif; font-weight:700;">${msg}</span><br><br><button class="btn-next" style="display:inline-block" onclick="restartQuiz()">INTENTAR DE NUEVO ↩</button>`;
+  final.style.display = 'block';
+  document.getElementById('quiz-progress').innerHTML = preguntas.map(() => `<div class="q-dot done"></div>`).join('');
+}
+
+function restartQuiz() { qIndex = 0; score = 0; renderQuiz(); }
+
+renderQuiz();
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-in, .timeline-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
